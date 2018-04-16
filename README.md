@@ -1,0 +1,2 @@
+# core
+Lagoon core component.
