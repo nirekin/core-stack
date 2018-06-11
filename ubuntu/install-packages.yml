@@ -1,0 +1,41 @@
+- name: Run the equivalent of "apt-get update" as a separate step
+  apt:
+    update_cache: yes
+  become: true
+
+- name: Install NFS dependencies for backup
+  become: true
+  apt:
+      name={{ item }}
+      state=present
+      update_cache=yes
+  with_items:
+      - apt-transport-https
+      - ca-certificates
+      - nfs-common
+      - python
+      - ntp
+  
+- name: Update all packages to the latest version
+  apt:
+    upgrade: dist
+  become: true
+  register: upgradeMachine
+
+- name: reboot server
+  become: yes
+  shell: sleep 2 && /sbin/shutdown -r now "System reboot"
+  async: 1
+  poll: 0
+  when: upgradeMachine.changed
+
+- pause: seconds=10
+  when: upgradeMachine.changed
+
+- name: Wait for restart
+  become: no
+  wait_for_connection:
+    delay: 5
+    timeout: 180
+  when: upgradeMachine.changed
+  

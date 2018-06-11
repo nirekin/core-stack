@@ -1,0 +1,24 @@
+- hosts: "tag_Name_{{client_name}}"
+  gather_facts: false
+  pre_tasks:
+  - name: Load Client configuration
+    include_tasks: common/load-configuration.yml
+  - name: Check machine release
+    raw: lsb_release -i -s
+    changed_when: False
+    register: linux_version
+  - name: Add python modules
+    raw: test -e /usr/bin/python || (apt -y update && apt install -y python-minimal)
+    changed_when: False
+    become: yes
+    when: ( linux_version.stdout | trim ) == "Ubuntu"
+  - setup: # aka gather_facts  
+  tasks:
+  - name: Install Packages
+    include_tasks: ubuntu/install-packages.yml
+    when: ansible_distribution == "Ubuntu"
+    
+- hosts: "tag_Name_{{client_name}}"
+  roles:
+     - { name: docker }
+  tags: install-docker
