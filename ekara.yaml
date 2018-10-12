@@ -1,10 +1,10 @@
 components:
   aws:
     repository: ekara-platform/provider-aws
-    version: master
+    version: alpha3
   swarm:
     repository: ekara-platform/orchestrator-swarm
-    version: master
+    version: alpha3
   prometheus:
     repository: ekara-platform/stack-prometheus
-    version: master
+    version: alpha3
