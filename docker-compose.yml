@@ -1,0 +1,24 @@
+version: '2'
+services:
+  api:
+    image: "nirekin/api"
+    environment:
+    - http_proxy
+    - https_proxy
+    - no_proxy=consul
+
+    ports:
+     - "8080:9999"
+    command: --logScript --logTime
+
+    volumes:
+    - ./out:/var/lib/ekara
+
+  consul:
+    command: -server -bootstrap -advertise 127.0.0.1
+    image: "progrium/consul"
+    ports:
+     - "8300:8300"
+     - "8400:8400"
+     - "8500:8500"
+     - "8600:53/udp"    

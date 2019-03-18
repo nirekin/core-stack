@@ -1,0 +1,11 @@
+---
+
+- hosts: managers
+  run_once: true
+  tasks:
+  - name: Start core Stack
+    docker_stack:
+      state: present
+      name: stack-core
+      compose:
+      - "docker-compose.yml
