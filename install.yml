@@ -8,4 +8,4 @@
       state: present
       name: stack-core
       compose:
-      - "docker-compose.yml
+      - "docker-compose.yml"
