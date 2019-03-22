@@ -10,6 +10,10 @@ services:
     ports:
      - "8090:9999"
     command: --logScript --logTime
+    deploy:
+      placement:
+        constraints:
+          - node.role == manager
 
   consul:
     command: -server -bootstrap -advertise 127.0.0.1
@@ -19,3 +23,9 @@ services:
      - "8400:8400"
      - "8500:8500"
      - "8600:53/udp"    
+    deploy:
+      mode: replicated
+      replicas: 2
+      placement:
+        constraints:
+          - node.role == manager
