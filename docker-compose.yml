@@ -8,7 +8,7 @@ services:
     - no_proxy=consul
 
     ports:
-     - "8090:9999"
+     - "{{ .Vars.ekara.api.port }}:9999"
     command: --logScript --logTime
     deploy:
       placement:
@@ -19,10 +19,10 @@ services:
     command: -server -bootstrap -advertise 127.0.0.1
     image: "progrium/consul"
     ports:
-     - "8300:8300"
-     - "8400:8400"
-     - "8500:8500"
-     - "8600:53/udp"    
+     - "{{ .Vars.ekara.consul.port1 }}:8300"
+     - "{{ .Vars.ekara.consul.port2 }}:8400"
+     - "{{ .Vars.ekara.consul.port3 }}:8500"
+     - "{{ .Vars.ekara.consul.port4 }}:53/udp"    
     deploy:
       mode: replicated
       replicas: 2
