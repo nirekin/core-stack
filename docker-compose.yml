@@ -1,7 +1,7 @@
 version: '3'
 services:
   api:
-    image: "nirekin/api"
+    image: "nirekin/apitest"
     environment:
     - http_proxy
     - https_proxy
