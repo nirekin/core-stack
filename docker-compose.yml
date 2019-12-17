@@ -9,7 +9,6 @@ services:
 
     ports:
      - "{{ .Vars.ekara.api.port }}:9999"
-    command: --logScript --logTime
     deploy:
       placement:
         constraints:
